@@ -1,5 +1,5 @@
 
-var routes = {
+var pages = {
     Home: Home,
     Choose: Choose,
     Offroad: Offroad,
@@ -10,24 +10,23 @@ var routes = {
     About: About,
     Contacts: Contacts,
 };
+var hash = "";
 
 
 function route(state){
-    if(state === "load"){
-        container.innerHTML = routes['Home'];
-        window.location.href = "#Home";
-    }
-    else{
-        if(window.location.hash){
-            let hash = window.location.href.split('#')[1];
-            container.innerHTML = routes[hash];
-            if(hash === "Home"){
-            }
+    $(document).ready(function(){
+
+        if(state === "load"){
+            window.location.hash = "Home";
+            hash = "Home";
         }
         else{
-            let hash = 'home';
-            container.innerHTML = routes[hash];
+            hash = window.location.href.split('#')[1];
         }
-    }
+        alert(hash);
+        crossroads.addRoute("{hash}", function(){
+            $(container).load(pages[hash]);
+        });
+        crossroads.parse(document.location.pathname);
+    });
 }
-
